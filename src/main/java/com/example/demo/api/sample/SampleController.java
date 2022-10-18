@@ -3,11 +3,11 @@ package com.example.demo.api.sample;
 
 import com.example.demo.core.Message;
 import com.example.demo.core.ApiException;
+import com.example.demo.core.ResponseApi;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -19,43 +19,45 @@ public class SampleController {
     }
 
     @GetMapping("/sample")
-    public List<Sample> getAllSamples() {
-        return sampleService.findAll();
+    public ResponseEntity<ResponseApi> getAllSamples() {
+        // ResponseApi responseApi = new ResponseApi(sampleService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PostMapping("/sample")
-    public Sample createSample(@RequestBody Sample sample) {
-        return sampleService.create(sample);
+    public ResponseEntity<ResponseApi> createSample(@RequestBody Sample sample) {
+       ResponseApi responseApi = new ResponseApi(sampleService.create(sample));
+       return ResponseEntity.status(HttpStatus.OK).body(responseApi);
     }
 
     @GetMapping("/sample/{id}")
-    public Optional<Sample> retrieveSample(@PathVariable Long id) throws ApiException {
+    public ResponseEntity<ResponseApi> retrieveSample(@PathVariable Long id) {
         Optional<Sample> sample = sampleService.find(id);
         if (!sample.isPresent()) {
             throw new ApiException(Message.NOT_FOUND);
         }
-        return sample;
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseApi(sample));
     }
 
     @PutMapping("/sample/{id}")
-    public ResponseEntity<Sample> updateSample(@RequestBody Sample sample, @PathVariable Long id) throws ApiException {
+    public ResponseEntity<ResponseApi> updateSample(@RequestBody Sample sample, @PathVariable Long id) {
         Optional<Sample> sampleDelete = sampleService.find(id);
         if (!sampleDelete.isPresent())
             throw new ApiException(Message.NOT_FOUND);
 
         sample.setId(id);
         sampleService.update(sample);
-        return new ResponseEntity<>(sample, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseApi(sample));
     }
 
     @DeleteMapping("/sample/{id}")
-    public ResponseEntity<Optional<Sample>> deleteSample(@PathVariable Long id) throws ApiException {
+    public ResponseEntity<ResponseApi> deleteSample(@PathVariable Long id) {
         Optional<Sample> sampleDelete = sampleService.find(id);
         if (!sampleDelete.isPresent())
             throw new ApiException(Message.NOT_FOUND);
 
         sampleService.delete(id);
-        return new ResponseEntity<>(sampleDelete, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseApi(sampleDelete));
     }
 
 }
