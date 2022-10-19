@@ -12,12 +12,21 @@ import java.io.Serializable;
 public class Sample implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "sequence_dep_id")
     private Long id;
     private String name;
+    private String content;
 
     public Sample() {
 
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Sample(Long id, String name) {
@@ -29,10 +38,6 @@ public class Sample implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
-    public Long getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -42,6 +47,9 @@ public class Sample implements Serializable {
         this.name = name;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     @Override
     public String toString() {
