@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SampleService {
@@ -14,8 +15,9 @@ public class SampleService {
         this.sampleRepository = sampleRepository;
     }
 
-    public List<Sample> findAll() {
-        return sampleRepository.findAll();
+    public List<SampleDto> findAll() {
+        List<Sample> samples = sampleRepository.findAll();
+        return samples.stream().map(SampleDto::new).collect(Collectors.toList());
     }
 
     public Sample create(Sample sample) {
