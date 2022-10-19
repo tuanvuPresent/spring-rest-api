@@ -12,7 +12,8 @@ import java.io.Serializable;
 public class Sample implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "sequence_dep_id")
+    @GeneratedValue(generator = "snowflake")
+    @GenericGenerator(name = "snowflake", strategy = "com.example.demo.core.SnowFlakeGenerator")
     private Long id;
     private String name;
     private String content;
