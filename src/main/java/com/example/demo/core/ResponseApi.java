@@ -4,11 +4,11 @@ package com.example.demo.core;
 public class ResponseApi {
 
     private boolean status;
-    private String message;
+    private Object message;
     private String code;
     private Object data;
 
-    public ResponseApi(String message, String code) {
+    public ResponseApi(Object message, String code) {
         this.status = false;
         this.message = message;
         this.code = code;
@@ -26,7 +26,7 @@ public class ResponseApi {
         this.status = status;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(Object message) {
         this.message = message;
     }
 
@@ -42,7 +42,7 @@ public class ResponseApi {
         return status;
     }
 
-    public String getMessage() {
+    public Object getMessage() {
         return message;
     }
 
