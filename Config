@@ -1,0 +1,28 @@
+package com.example.demo.core;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@ConfigurationProperties(prefix = "app")
+@Configuration
+public class Config {
+
+    private Long epoch;
+    private Long shareId;
+
+    public Long getEpoch() {
+        return epoch;
+    }
+
+    public void setEpoch(Long epoch) {
+        this.epoch = epoch;
+    }
+
+    public Long getShareId() {
+        return shareId;
+    }
+
+    public void setShareId(Long shareId) {
+        this.shareId = shareId;
+    }
+}
